@@ -29,6 +29,7 @@ resource "aws_internet_gateway" "igw" {
 resource "aws_subnet" "main" {
   vpc_id     = aws_vpc.main.id
   cidr_block = var.pub1_sub_cidr
+  availability_zone = data.aws_availability_zones.available
   
 
  tags = merge (

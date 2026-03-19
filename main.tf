@@ -77,4 +77,87 @@ resource "aws_subnet" "db_snet" {
   )
 }
 
+#creating route tables
+resource "aws_route_table" "public_rt" {
+  vpc_id = aws_vpc.main.id
+
+  tags = merge (
+    local.common_tags,
+    {
+        name = "${var.project}-${var.environment}-public_rt"
+    },
+    var.public_rt
+  )
+}
+
+resource "aws_route_table" "private_rt" {
+  vpc_id = aws_vpc.main.id
+
+  tags = merge (
+    local.common_tags,
+    {
+        name = "${var.project}-${var.environment}-private_rt"
+    },
+    var.private_rt
+  )
+}
+
+resource "aws_route_table" "db_rt" {
+  vpc_id = aws_vpc.main.id
+
+  tags = merge (
+    local.common_tags,
+    {
+        name = "${var.project}-${var.environment}-db_rt"
+    },
+    var.db_rt
+  )
+}
+
+
+resource "aws_route_table_association" "pub-ass" {
+  count = length(var.pub_sub_cidr)
+  subnet_id      = aws_subnet.public_snet[count.index].id
+  route_table_id = aws_route_table.public_rt.id
+}
+
+resource "aws_route_table_association" "pri-ass" {
+  count = length(var.pri_sub_cidr)
+  subnet_id      = aws_subnet.private_snet[count.index].id
+  route_table_id = aws_route_table.private_rt.id
+}
+
+resource "aws_route_table_association" "db-ass" {
+  count = length(var.db_sub_cidr)
+  subnet_id      = aws_subnet.db_snet[count.index].id
+  route_table_id = aws_route_table.db_rt.id
+}
+
+#creating  eip
+resource "aws_eip" "nat_eip" {
+  domain   = "vpc"
+  tags = merge (
+    local.common_tags,
+    {
+        name = "${var.project}-${var.environment}-eip"
+    }
+  )
+}
+
+resource "aws_nat_gateway" "main" {
+  allocation_id = aws_eip.nat_eip.id
+  subnet_id     = aws_subnet.public_snet[0].id
+
+  tags =  merge (
+    local.common_tags,
+    {
+        name = "${var.project}-${var.environment}-eip"
+    },
+    var.ngw_tags
+  )
+  # To ensure proper ordering, it is recommended to add an explicit dependency
+  # on the Internet Gateway for the VPC.
+  depends_on = [aws_internet_gateway.igw]
+}
+
 

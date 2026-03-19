@@ -57,3 +57,23 @@ variable db_subnet_tags {
   type        = map
   default     = { }
 }
+
+variable public_rt {
+  type        = map
+  default     = { }
+}
+
+variable private_rt {
+  type        = map
+  default     = { }
+}
+
+variable db_rt {
+  type        = map
+  default     = { }
+}
+
+variable ngw_tags {
+  type        = map
+  default     = { }
+}

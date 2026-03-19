@@ -22,3 +22,13 @@ variable igw_tags {
   type        = map
   default     = { }
 }
+
+variable pub1_sub_cidr {
+  type        = string
+  default     = "10.0.0.0/24"
+}
+
+variable pub2_sub_cidr {
+  type        = string
+  default     = "10.0.0.32/24"
+}

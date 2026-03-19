@@ -24,3 +24,18 @@ resource "aws_internet_gateway" "igw" {
     var.igw_tags
   )
 }
+#creating subnets in two av zones
+
+resource "aws_subnet" "main" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = var.pub1_sub_cidr
+  
+
+ tags = merge (
+    local.common_tags,
+    {
+        name = "${var.project}-${var.environment}-vpc"
+    },
+    var.vpc_tags
+  )
+}

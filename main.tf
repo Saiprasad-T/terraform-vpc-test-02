@@ -27,16 +27,17 @@ resource "aws_internet_gateway" "igw" {
 #creating subnets in two av zones
 
 resource "aws_subnet" "main" {
+  count = length(var.pub_sub_cidr)
   vpc_id     = aws_vpc.main.id
-  cidr_block = var.pub1_sub_cidr
-  availability_zone = data.aws_availability_zones.available
+  cidr_block = var.pub_sub_cidr[count.index]
+  availability_zone = var.az_zone[count.index]
   
 
  tags = merge (
     local.common_tags,
     {
-        name = "${var.project}-${var.environment}-vpc"
+        name = "${var.project}-${var.environment}-${var.az_zone[count.index]}"
     },
-    var.vpc_tags
+    var.public_subnet_tags
   )
 }

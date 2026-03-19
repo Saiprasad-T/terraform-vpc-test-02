@@ -23,12 +23,17 @@ variable igw_tags {
   default     = { }
 }
 
-variable pub1_sub_cidr {
-  type        = string
-  default     = "10.0.0.0/24"
+variable pub_sub_cidr {
+  type        = list
+  default     = ["10.0.0.0/24","10.0.0.32/24"]
 }
 
-variable pub2_sub_cidr {
-  type        = string
-  default     = "10.0.0.32/24"
+variable az_zone {
+  type        = list
+  default     = ["us-east-1a","us-east-1b"]
+}
+
+variable public_subnet_tags {
+  type        = map
+  default     = { }
 }

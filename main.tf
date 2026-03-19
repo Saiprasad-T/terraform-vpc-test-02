@@ -19,7 +19,7 @@ resource "aws_internet_gateway" "igw" {
   tags = merge (
     local.common_tags,
     {
-        name = "${var.project}-${var.environment}-igw"
+        Name = "${var.project}-${var.environment}-igw"
     },
     var.igw_tags
   )
@@ -37,7 +37,7 @@ resource "aws_subnet" "public_snet" {
  tags = merge (
     local.common_tags,
     {
-        name = "${var.project}-${var.environment}-public-snet-${var.az_zone[count.index]}"
+        Name = "${var.project}-${var.environment}-public-snet-${var.az_zone[count.index]}"
     },
     var.public_subnet_tags
   )
@@ -54,7 +54,7 @@ resource "aws_subnet" "private_snet" {
  tags = merge (
     local.common_tags,
     {
-        name = "${var.project}-${var.environment}-private-snet-${var.az_zone[count.index]}"
+        Name = "${var.project}-${var.environment}-private-snet-${var.az_zone[count.index]}"
     },
     var.private_subnet_tags
   )
@@ -71,7 +71,7 @@ resource "aws_subnet" "db_snet" {
  tags = merge (
     local.common_tags,
     {
-        name = "${var.project}-${var.environment}-db-snet-${var.az_zone[count.index]}"
+        Name = "${var.project}-${var.environment}-db-snet-${var.az_zone[count.index]}"
     },
     var.db_subnet_tags
   )
@@ -84,7 +84,7 @@ resource "aws_route_table" "public_rt" {
   tags = merge (
     local.common_tags,
     {
-        name = "${var.project}-${var.environment}-public_rt"
+        Name = "${var.project}-${var.environment}-public_rt"
     },
     var.public_rt
   )
@@ -96,7 +96,7 @@ resource "aws_route_table" "private_rt" {
   tags = merge (
     local.common_tags,
     {
-        name = "${var.project}-${var.environment}-private_rt"
+        Name = "${var.project}-${var.environment}-private_rt"
     },
     var.private_rt
   )
@@ -108,7 +108,7 @@ resource "aws_route_table" "db_rt" {
   tags = merge (
     local.common_tags,
     {
-        name = "${var.project}-${var.environment}-db_rt"
+        Name = "${var.project}-${var.environment}-db_rt"
     },
     var.db_rt
   )
@@ -139,7 +139,7 @@ resource "aws_eip" "nat_eip" {
   tags = merge (
     local.common_tags,
     {
-        name = "${var.project}-${var.environment}-eip"
+        Name = "${var.project}-${var.environment}-eip"
     }
   )
 }
@@ -151,7 +151,7 @@ resource "aws_nat_gateway" "main" {
   tags =  merge (
     local.common_tags,
     {
-        name = "${var.project}-${var.environment}-eip"
+        Name = "${var.project}-${var.environment}-eip"
     },
     var.ngw_tags
   )

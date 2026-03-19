@@ -26,7 +26,7 @@ resource "aws_internet_gateway" "igw" {
 }
 #creating subnets in two av zones
 
-resource "aws_subnet" "main" {
+resource "aws_subnet" "public_snet" {
   count = length(var.pub_sub_cidr)
   vpc_id     = aws_vpc.main.id
   cidr_block = var.pub_sub_cidr[count.index]
@@ -43,7 +43,7 @@ resource "aws_subnet" "main" {
   )
 }
 
-resource "aws_subnet" "main" {
+resource "aws_subnet" "private_snet" {
   count = length(var.pri_sub_cidr)
   vpc_id     = aws_vpc.main.id
   cidr_block = var.pri_sub_cidr[count.index]
@@ -60,7 +60,7 @@ resource "aws_subnet" "main" {
   )
 }
 
-resource "aws_subnet" "main" {
+resource "aws_subnet" "db_snet" {
   count = length(var.db_sub_cidr)
   vpc_id     = aws_vpc.main.id
   cidr_block = var.db_sub_cidr[count.index]

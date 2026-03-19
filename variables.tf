@@ -25,7 +25,7 @@ variable igw_tags {
 
 variable pub_sub_cidr {
   type        = list
-  default     = ["10.0.0.0/24","10.0.0.32/24"]
+  default     = ["10.0.0.0/27","10.0.0.32/27"]
 }
 
 variable az_zone {

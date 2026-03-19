@@ -3,6 +3,6 @@ output "vpc_id" {
 }
 
 output "az_info" {
-  value       = data.aws_subnet.main.availability_zone.available.names
+  value       = data.aws_availability_zones.available.names
 }
 

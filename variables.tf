@@ -1,10 +1,10 @@
 variable project {
-  type        = "string"
+  type        = string
   default     = "roboshop"
 }
 
 variable environment {
-  type        = "string"
+  type        = string
   default     = "dev"
 }
 
@@ -14,11 +14,11 @@ variable cidr {
 }
 
 variable vpc_tags {
-  type        = "map"
+  type        = map
   default     = { }
 }
 
 variable igw_tags {
-  type        = "map"
+  type        = map
   default     = { }
 }

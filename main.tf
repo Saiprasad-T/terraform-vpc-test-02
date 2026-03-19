@@ -31,13 +31,50 @@ resource "aws_subnet" "main" {
   vpc_id     = aws_vpc.main.id
   cidr_block = var.pub_sub_cidr[count.index]
   availability_zone = var.az_zone[count.index]
+  map_public_ip_on_launch = true
   
 
  tags = merge (
     local.common_tags,
     {
-        name = "${var.project}-${var.environment}-${var.az_zone[count.index]}"
+        name = "${var.project}-${var.environment}-public-snet-${var.az_zone[count.index]}"
     },
     var.public_subnet_tags
   )
 }
+
+resource "aws_subnet" "main" {
+  count = length(var.pri_sub_cidr)
+  vpc_id     = aws_vpc.main.id
+  cidr_block = var.pri_sub_cidr[count.index]
+  availability_zone = var.az_zone[count.index]
+  map_public_ip_on_launch = false
+  
+
+ tags = merge (
+    local.common_tags,
+    {
+        name = "${var.project}-${var.environment}-private-snet-${var.az_zone[count.index]}"
+    },
+    var.private_subnet_tags
+  )
+}
+
+resource "aws_subnet" "main" {
+  count = length(var.db_sub_cidr)
+  vpc_id     = aws_vpc.main.id
+  cidr_block = var.db_sub_cidr[count.index]
+  availability_zone = var.az_zone[count.index]
+  map_public_ip_on_launch = false
+  
+
+ tags = merge (
+    local.common_tags,
+    {
+        name = "${var.project}-${var.environment}-db-snet-${var.az_zone[count.index]}"
+    },
+    var.db_subnet_tags
+  )
+}
+
+

@@ -160,20 +160,20 @@ resource "aws_nat_gateway" "main" {
   depends_on = [aws_internet_gateway.igw]
 }
  #routes
- resource "aws_route" "igw_route" {
+ resource "aws_route" "pub_route" {
   route_table_id            = aws_route_table.public_rt.id
   destination_cidr_block    = "0.0.0.0/0"
   gateway_id = aws_internet_gateway.igw.id
 }
 
- resource "aws_route" "igw_route" {
-  route_table_id            = aws_route_table.public_rt.id
+ resource "aws_route" "pri_route" {
+  route_table_id            = aws_route_table.private_rt.id
   destination_cidr_block    = "0.0.0.0/0"
   nat_gateway_id = aws_nat_gateway.main.id
 }
 
- resource "aws_route" "igw_route" {
-  route_table_id            = aws_route_table.public_rt.id
+ resource "aws_route" "db_route" {
+  route_table_id            = aws_route_table.db_rt.id
   destination_cidr_block    = "0.0.0.0/0"
   nat_gateway_id = aws_nat_gateway.main.id
 }
